@@ -1,0 +1,222 @@
+html {
+  font-size: 62.5%; /* 10px*/
+  scroll-behavior: smooth;
+}
+body {
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.container1 {
+  display: flex;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.image-container {
+  display: block; /* Ensures the container behaves like a block */
+  text-align: center; /* Centers the image horizontally */
+  margin: 5% auto; /* Adds dynamic vertical spacing */
+}
+
+.logo {
+  max-width: 80%; /* Ensures the image scales with the container */
+  height: auto; /* Maintains aspect ratio */
+  display: inline-block; /* Centers the image within the container */
+}
+.col-2l {
+  display: block;
+  width: 10%;
+  background-color: white;
+  color: white;
+  height: auto;
+  min-height: 100vh; /* Full height */
+  padding: 2%;
+  box-sizing: border-box;
+  border-right: 0.4px solid #ddd;
+}
+
+.col-2l {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally*/
+  width: 10%;
+  background-color: white;
+  color: white;
+  height: auto;
+  min-height: 100vh; /* Full viewport height */
+  padding: 2%;
+  box-sizing: border-box;
+  border-right: 0.4px solid #ddd;
+}
+
+.col-2l div {
+  margin: 4% 0;
+}
+
+.col-2l img {
+  cursor: pointer; /* Indicate clickable icons */
+  width: 90%;
+  height: 60%;
+  transition: transform 0.2s ease;
+}
+
+.col-2l img:hover {
+  transform: scale(1.2); /* Enlarge icon slightly on hover */
+  opacity: 0.8; /* Slightly dim the icon */
+}
+
+.col-6md {
+  display: block;
+  width: 65%;
+  background-color: white;
+  color: black;
+  height: auto;
+  min-height: 100vh; /* Full height */
+  padding: 2%;
+  box-sizing: border-box;
+}
+
+.display-header {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(153, 153, 204);
+
+  border-radius: 3px;
+  padding-right: 10%;
+  margin-bottom: 3%;
+}
+
+.display-header .name-page {
+  padding-left: 12%;
+  align-items: center;
+}
+
+.name-page {
+  color: white;
+  font-weight: 300px;
+  font: italic;
+  font-size: 3rem;
+  padding: 2% 2%;
+  box-sizing: border-box;
+}
+.Name-exer {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0px;
+  padding-left: 0;
+  margin-left: 0%;
+}
+
+.post-date {
+  font-size: 1.6rem;
+  margin-bottom: 50%;
+}
+.body-center {
+  font-size: 1.6rem;
+  display: block;
+}
+
+.main-content {
+  font-size: 1.6rem;
+}
+
+ol a,
+ul a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+ol a:hover,
+ul a:hover {
+  text-decoration: underline;
+}
+.part-title {
+  font-size: 2.5rem;
+}
+
+.part-content {
+  font-size: 1.6rem;
+}
+
+.col-2r {
+  display: inline-block;
+  width: 15%;
+  background-color: white;
+  color: black;
+  height: auto;
+  min-height: 100vh; /* Full height */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.share-icon {
+  display: block;
+  padding: 2% 2% 2% 0;
+  margin-top: 0px;
+}
+
+.share-icon img {
+  width: 20%;
+  height: 20%;
+  transition: transform 0.2s ease;
+  padding: 4%;
+}
+
+.share-icon img:hover {
+  transform: scale(1.2); /* bigger when hover */
+}
+
+@media print {
+  .section,
+  .col-2l,
+  .col-2r {
+    display: none !important;
+  }
+  .body-center {
+    min-width: 150%;
+  }
+}
+
+.related-exer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-right: 3%;
+}
+
+.related-exer .item {
+  margin-top: 6%;
+  margin-bottom: 6%;
+  border-radius: 5px;
+  border: 2px solid white; /* Border mỏng màu xám nhạt */
+  width: 100%;
+  text-align: left;
+  transition: transform 0.3s ease, border-color 0.3s ease; /* Thêm hiệu ứng chuyển động mượt mà */
+}
+
+.related-title {
+  font-size: 1.5rem;
+  font-weight: 200;
+  margin-top: 10px;
+  white-space: nowrap; /* Ngắt chữ thành một dòng duy nhất */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Hiển thị dấu ba chấm nếu chữ quá dài */
+  transition: text-overflow 0.3s ease;
+}
+
+.related-exer .item:hover {
+  transform: scale(1.2);
+}
+
+.related-exer .item:hover .related-title {
+  white-space: normal;
+  text-overflow: clip;
+}
+.related-exer img {
+  width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của div */
+  height: auto; /* Giữ tỷ lệ gốc của ảnh */
+  margin-bottom: 0;
+}

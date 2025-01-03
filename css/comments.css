@@ -1,0 +1,104 @@
+.section {
+  display: flex;
+  justify-content: center;
+}
+.comments {
+  display: block;
+  min-width: 100%;
+  max-width: 100%;
+}
+.comments .comment_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid #636363;
+}
+.comments .comments_header .total {
+  font-size: 1.6rem;
+}
+
+.comments .write_comment_btn,
+.comments .write_comment button {
+  display: inline-block;
+  background-color: rgb(153, 153, 204);
+  color: #fff;
+  text-decoration: none;
+  margin: 0;
+  padding: 1.5%;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  font-weight: 600px;
+  border: 0;
+}
+
+.comments .write_comment_btn:hover,
+.comments .write_comment button:hover {
+  /* background-color: rgb(203, 174, 225);
+   */
+  /*  */
+  background-color: #636363;
+}
+
+.comments .write_comment {
+  display: none;
+  padding: 2%;
+}
+.comments .write_comment textarea {
+  width: 80%;
+  padding: 2%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 150px;
+  margin-top: 2%;
+}
+
+.comments .write_comment input {
+  display: block;
+  width: 40%;
+  padding: 2%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 2%;
+}
+
+.comments .write_comment button {
+  /* submit  */
+  cursor: pointer;
+}
+
+.comments .comment {
+  padding-top: 2%;
+  overflow-wrap: break-word;
+}
+.comments .comment .name {
+  display: inline;
+  padding: 0 2% 1% 0;
+  font-size: 1.6rem;
+  color: #555555;
+}
+.comments .comment .date {
+  color: #888888;
+  font-size: 1.4rem;
+}
+.comments .comment .content {
+  margin-top: 1%;
+  padding-left: 2.5%;
+  border-left: 1px solid #ddd;
+}
+.comments .comment .reply_comment_btn {
+  display: flex;
+  border-left: 1px solid #ddd;
+
+  padding-left: 2.5%;
+  text-decoration: none;
+  margin-top: -1%;
+  font-size: 1.4rem;
+  color: #888888;
+}
+.comments .comment .replies {
+  padding-left: 2%;
+  /* border-left: 1px solid #ddd; */
+}

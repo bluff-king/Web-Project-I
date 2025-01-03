@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Webpage for preprocessing images and counting rice grains."
+    />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/comments.css" />
+    <link rel="shortcut icon" href="../Img/my_logo.png" type="image/x-icon" />
+    <title>Determining Chessboard Size</title>
+  </head>
+  <body>
+    <div class="container1">
+      <div class="col-2l">
+        <div class="my_github_icon">
+          <a
+            href="https://github.com/bluff-king"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="../Img/github-logo.png" alt="GitHub" />
+          </a>
+        </div>
+        <div class="my_facebook_icon">
+          <a
+            href="https://www.facebook.com/profile.php?id=100010165845344"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="../Img/logo_fb.png" alt="Facebook" />
+          </a>
+        </div>
+        <div class="my_gmail_con">
+          <a href="mailto:chanthichuong@gmail.com">
+            <img src="../Img/logo_gmail.png" alt="Gmail" />
+          </a>
+        </div>
+      </div>
+
+      <div class="col-6md">
+        <header class="header-part" style="margin: 3% 0%">
+          <div class="display-header">
+            <h1 class="name-page">Preprocessing Image</h1>
+          </div>
+          <p class="Name-exer">
+            Exercise2: Determining the number of horizontal and vertical squares
+            of the chessboard.
+          </p>
+          <span class="post-date" style="color: gray; font-style: italic">
+            December 25, 2024
+          </span>
+        </header>
+        <body class="body-center">
+          <div class="table-contents">
+            <span><strong>In this webpage:</strong></span>
+            <ol>
+              <li><a href="#Introduction">Introduction</a></li>
+              <li><a href="#Library-used">Library used</a></li>
+              <li><a href="#Step-to-step">Step-to-step</a></li>
+              <ul>
+                <li><a href="#step1">Step1</a></li>
+                <li><a href="#step2">Step2</a></li>
+                <li><a href="#step3">Step3</a></li>
+                <li><a href="#step4">Step4</a></li>
+                <li><a href="#step5">Step5</a></li>
+              </ul>
+              <li><a href="#Evaluation">Evaluation</a></li>
+              <li><a href="#Conclusion">Conclusion</a></li>
+              <li><a href="#References">References</a></li>
+            </ol>
+          </div>
+
+          <div class="main-content">
+            <div id="Introduction">
+              <span class="part-title">1.Introduction</span>
+              <p class="part-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                maxime assumenda animi, non impedit minus velit voluptatibus,
+                quam sit aliquid cum magnam quos culpa. Non voluptatum
+                distinctio blanditiis fugiat maxime.
+              </p>
+            </div>
+            <div id="Library-used">
+              <span class="part-title">2.Library used</span>
+              <p class="part-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                maxime assumenda animi, non impedit minus velit voluptatibus,
+                quam sit aliquid cum magnam quos culpa. Non voluptatum
+                distinctio blanditiis fugiat maxime.
+              </p>
+            </div>
+            <div id="Step-to-step">
+              <span class="part-title">3.Step-to-step</span>
+              <p class="part-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                maxime assumenda animi, non impedit minus velit voluptatibus,
+                quam sit aliquid cum magnam quos culpa. Non voluptatum
+                distinctio blanditiis fugiat maxime.
+              </p>
+            </div>
+            <div id="Evaluation">
+              <span class="part-title">4.Evaluation</span>
+              <p class="part-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                maxime assumenda animi, non impedit minus velit voluptatibus,
+                quam sit aliquid cum magnam quos culpa. Non voluptatum
+                distinctio blanditiis fugiat maxime.
+              </p>
+            </div>
+            <div id="Conclusion">
+              <span class="part-title">5.Conclusion</span>
+              <p class="part-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                maxime assumenda animi, non impedit minus velit voluptatibus,
+                quam sit aliquid cum magnam quos culpa. Non voluptatum
+                distinctio blanditiis fugiat maxime.
+              </p>
+            </div>
+            <div id="References">
+              <span class="part-title">6.References</span>
+              <p class="part-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+                maxime assumenda animi, non impedit minus velit voluptatibus,
+                quam sit aliquid cum magnam quos culpa. Non voluptatum
+                distinctio blanditiis fugiat maxime.
+              </p>
+            </div>
+          </div>
+        </body>
+
+        <div class="section">
+          <div class="comments">
+            <script>
+              const commentsPageId = 1;
+              const commentsTable = "cmt_p2";
+              fetch(
+                `../php/comments.php?page_id=${commentsPageId}&table=${commentsTable}`
+              )
+                .then((response) => response.text())
+                .then((data) => {
+                  document.querySelector(".comments").innerHTML = data;
+                  document
+                    .querySelectorAll(
+                      ".comments .write_comment_btn, .comments .reply_comment_btn"
+                    )
+                    .forEach((element) => {
+                      element.onclick = (event) => {
+                        event.preventDefault();
+                        document
+                          .querySelectorAll(".comments .write_comment")
+                          .forEach(
+                            (element) => (element.style.display = "none")
+                          );
+                        document.querySelector(
+                          "div[data-comment-id='" +
+                            element.getAttribute("data-comment-id") +
+                            "']"
+                        ).style.display = "block";
+                        document
+                          .querySelector(
+                            "div[data-comment-id='" +
+                              element.getAttribute("data-comment-id") +
+                              "'] input[name='name']"
+                          )
+                          .focus();
+                      };
+                    });
+                  document
+                    .querySelectorAll(".comments .write_comment form")
+                    .forEach((element) => {
+                      element.onsubmit = (event) => {
+                        event.preventDefault();
+                        fetch(
+                          `../php/comments.php?page_id=${commentsPageId}&table=${commentsTable}`,
+                          {
+                            method: "POST",
+                            body: new FormData(element),
+                          }
+                        )
+                          .then((response) => response.text())
+                          .then((data) => {
+                            element.parentElement.innerHTML = data;
+                          });
+                      };
+                    });
+                });
+            </script>
+          </div>
+        </div>
+      </div>
+      <div class="col-2r">
+        <hr />
+        <div class="share">
+          <p style="padding-left: 4%; font-size: 2rem; margin: 0px">SHARE</p>
+          <div class="share-icon">
+            <img
+              src="../Img/logo_fb.png"
+              alt="Facebook Logo"
+              style="cursor: pointer"
+              onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=https://example.com', '_blank', 'noopener,noreferrer')"
+            />
+            <img
+              src="../Img/logo_gmail.png"
+              alt="Gmail Logo"
+              style="cursor: pointer"
+              onclick="window.open('mailto:?subject=Check%20this%20out!&body=Hi,%0A%0ACheck%20out%20this%20link:%20https://example.com', '_self')"
+            />
+            <img
+              src="../Img/print.png"
+              alt="Print Icon"
+              onclick="window.print()"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="related-exer">
+          <div class="item">
+            <a href="Page1.html">
+              <img src="../Img/rice_grains.png" alt="Rice grains counting" />
+              <h2 class="related-title">Counting Rice Grains</h2>
+            </a>
+          </div>
+          <div class="item">
+            <a href="Page2.html">
+              <img src="../Img/exer2.png" alt="Chessboard size" />
+              <h2 class="related-title">Determining Chessboard Size</h2>
+            </a>
+          </div>
+          <div class="item">
+            <a href="Page3.html">
+              <img src="../Img/exer3.png" alt="" />
+              <h2 class="related-title">
+                Tracking Historical Moves of Chess Match
+              </h2>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
