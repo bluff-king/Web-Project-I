@@ -2,6 +2,24 @@ html {
   font-size: 62.5%; /* 10px*/
   scroll-behavior: smooth;
 }
+
+h2 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.part-title {
+  font-size: 2.5rem;
+}
+.part-part-title {
+  font-size: 2rem;
+  font-style: italic;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -144,7 +162,7 @@ ul a:hover {
 .image-item {
   width: 23%;
   height: auto;
-  object-fit: cover;
+  object-fit: cover; /* Ensures images fill the space without distortion */
 }
 .part-content {
   font-size: 1.6rem;

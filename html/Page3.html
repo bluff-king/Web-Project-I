@@ -45,7 +45,7 @@
           <div class="display-header">
             <h1 class="name-page">Preprocessing Image</h1>
           </div>
-          <p class="Name-exer">Exercise1: Counting number of rice grains.</p>
+          <h1 class="Name-exer">Exercise1: Counting number of rice grains.</h1>
           <span class="post-date" style="color: gray; font-style: italic">
             December 25, 2024
           </span>
@@ -57,11 +57,12 @@
               <li><a href="#Introduction">Introduction</a></li>
               <li><a href="#Step-to-step">Step-to-step</a></li>
               <ul>
-                <li><a href="#step1">Step1</a></li>
-                <li><a href="#step2">Step2</a></li>
-                <li><a href="#step3">Step3</a></li>
-                <li><a href="#step4">Step4</a></li>
-                <li><a href="#step5">Step5</a></li>
+                <li><a href="#step1">Gray-Scale</a></li>
+                <li><a href="#step2">Remove Sinusoidal Noise</a></li>
+                <li><a href="#step3">Gamma Correction</a></li>
+                <li><a href="#step4">Binary Image Conversion</a></li>
+                <li><a href="#step5">Opening, Closing</a></li>
+                <li><a href="#step6">Counting Object</a></li>
               </ul>
               <li><a href="#Evaluation">Evaluation</a></li>
               <li><a href="#Conclusion">Conclusion</a></li>
@@ -71,33 +72,35 @@
 
           <div class="main-content">
             <div id="Introduction">
-              <span class="part-title">1.Introduction</span>
+              <h2 class="part-title">1. Introduction</h2>
               <p class="part-content">
-                Given a set of images in which several subjects are captured
-                against a relatively uniform, possibly noisy background, count
-                the number of objects in each image. The objective is to define
-                a processing pipeline that works for all images. All images from
-                a scene should be processed using the same parameter values, if
-                applicable.
+                Given the set of images, this collection contains information
+                about the history of the moves in a chess game, which are
+                handwritten on the squares of the chessboard. Please propose a
+                method to effectively isolate and extract these squares
+                containing the handwritten moves from the images provided in the
+                attached file. The goal is to create a systematic approach to
+                identify each square, capture the text, and separate it for
+                further analysis or processing.
               </p>
               <div class="display-images">
                 <img
-                  src="../Img/Exer1/Pic1.jpg"
+                  src="../Img/Exer3/Pic1.png"
                   alt="Image 1"
                   class="image-item"
                 />
                 <img
-                  src="../Img/Exer1/Pic2.jpg"
+                  src="../Img/Exer3/Pic2.png"
                   alt="Image 2"
                   class="image-item"
                 />
                 <img
-                  src="../Img/Exer1/Pic3.jpg"
+                  src="../Img/Exer3/Pic3.png"
                   alt="Image 3"
                   class="image-item"
                 />
                 <img
-                  src="../Img/Exer1/Pic4.png"
+                  src="../Img/Exer3/Pic4.png"
                   alt="Image 4"
                   class="image-item"
                 />
@@ -105,16 +108,101 @@
             </div>
 
             <div id="Step-to-step">
-              <span class="part-title">2.Step-to-step</span>
+              <h2 class="part-title">2. Step-to-step</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                The following steps outline the preprocessing pipeline for
+                counting rice grains. Each step is designed to handle specific
+                challenges in the images and ensure accurate object detection
+                and counting.
               </p>
+
+              <div id="step1">
+                <p class="part-title">Step 1: Gray-Scale</p>
+                <p class="part-content">
+                  Convert the input image to grayscale. This simplifies the
+                  image by removing color information, reducing the complexity
+                  of processing while preserving essential structural details.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/GrayScale.jpg"
+                  alt="Gray-Scale Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step2">
+                <p class="part-title">Step 2: Remove Sinusoidal Noise</p>
+                <p class="part-content">
+                  Apply a filtering technique, such as a notch filter in the
+                  frequency domain, to remove sinusoidal noise. This step
+                  ensures a cleaner image for subsequent processing.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/NoiseRemoval.jpg"
+                  alt="Noise Removal Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step3">
+                <p class="part-title">Step 3: Gamma Correction</p>
+                <p class="part-content">
+                  Perform gamma correction to adjust the brightness levels of
+                  the image. This step enhances details in darker or brighter
+                  regions, ensuring uniform visibility.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/GammaCorrection.jpg"
+                  alt="Gamma Correction Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step4">
+                <p class="part-title">Step 4: Binary Image Conversion</p>
+                <p class="part-content">
+                  Convert the grayscale image to a binary image using a
+                  thresholding method. This step separates the objects of
+                  interest (rice grains) from the background.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/BinaryImage.jpg"
+                  alt="Binary Image Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step5">
+                <p class="part-title">Step 5: Opening, Closing</p>
+                <p class="part-content">
+                  Use morphological operations like opening and closing to
+                  refine the shapes of the objects. This step removes noise and
+                  fills small gaps within objects.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/MorphologicalOps.jpg"
+                  alt="Morphological Operations Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step6">
+                <p class="part-title">Step 6: Counting Object</p>
+                <p class="part-content">
+                  Identify and count the connected components in the binary
+                  image. This step uses labeling algorithms to count the rice
+                  grains accurately.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/ObjectCounting.jpg"
+                  alt="Object Counting Example"
+                  class="image-item"
+                /> -->
+              </div>
             </div>
+
             <div id="Evaluation">
-              <span class="part-title">3.Evaluation</span>
+              <h2 class="part-title">3. Evaluation</h2>
               <p class="part-content">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
                 maxime assumenda animi, non impedit minus velit voluptatibus,
@@ -123,7 +211,7 @@
               </p>
             </div>
             <div id="Conclusion">
-              <span class="part-title">4.Conclusion</span>
+              <h2 class="part-title">4. Conclusion</h2>
               <p class="part-content">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
                 maxime assumenda animi, non impedit minus velit voluptatibus,
@@ -132,12 +220,15 @@
               </p>
             </div>
             <div id="References">
-              <span class="part-title">5.References</span>
+              <h2 class="part-title">5. References</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                We sincerely thank Hanoi University and the Computer Vision Lab
+                for their valuable support in providing resources and materials
+                for this work. Their commitment to research and collaboration
+                has played an important role in shaping this project. The
+                resources and guidance from the Computer Vision Lab have greatly
+                enhanced our understanding and contributed to the success of
+                this work.
               </p>
             </div>
           </div>

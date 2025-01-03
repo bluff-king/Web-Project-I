@@ -45,7 +45,7 @@
           <div class="display-header">
             <h1 class="name-page">Preprocessing Image</h1>
           </div>
-          <p class="Name-exer">Exercise1: Counting number of rice grains.</p>
+          <h1 class="Name-exer">Exercise1: Counting number of rice grains.</h1>
           <span class="post-date" style="color: gray; font-style: italic">
             December 25, 2024
           </span>
@@ -57,11 +57,15 @@
               <li><a href="#Introduction">Introduction</a></li>
               <li><a href="#Step-to-step">Step-to-step</a></li>
               <ul>
-                <li><a href="#step1">Step1</a></li>
-                <li><a href="#step2">Step2</a></li>
-                <li><a href="#step3">Step3</a></li>
-                <li><a href="#step4">Step4</a></li>
-                <li><a href="#step5">Step5</a></li>
+                <li><a href="#step1">Gray-Scale</a></li>
+                <li><a href="#step2">Remove Sinusoidal Noise</a></li>
+                <li><a href="#step3">Mean Filtering</a></li>
+                <li><a href="#step4">Edge Detection with Canny</a></li>
+                <li><a href="#step5">Opening, Closing</a></li>
+                <li>
+                  <a href="#step6">Line Detection with Hough Transform</a>
+                </li>
+                <li><a href="#step7">Remove redundant lines</a></li>
               </ul>
               <li><a href="#Evaluation">Evaluation</a></li>
               <li><a href="#Conclusion">Conclusion</a></li>
@@ -71,33 +75,39 @@
 
           <div class="main-content">
             <div id="Introduction">
-              <span class="part-title">1.Introduction</span>
+              <h2 class="part-title">1. Introduction</h2>
               <p class="part-content">
-                Given a set of images in which several subjects are captured
-                against a relatively uniform, possibly noisy background, count
-                the number of objects in each image. The objective is to define
-                a processing pipeline that works for all images. All images from
-                a scene should be processed using the same parameter values, if
-                applicable.
+                Given a set of chessboard images, our objective is to determine
+                the size of the chessboard present in each image accurately.
+                This entails identifying the arrangement and count of the
+                squares that compose the chessboard layout. We kindly ask you to
+                define a comprehensive processing pipeline that can be applied
+                uniformly to all images within the set. This pipeline should
+                encompass all necessary steps, from initial image acquisition
+                and preprocessing to the final determination of the chessboard
+                size. Furthermore, it is essential that all images captured from
+                the same scene are processed using consistent parameter values
+                whenever applicable, to ensure reliable and comparable results
+                across the dataset.
               </p>
               <div class="display-images">
                 <img
-                  src="../Img/Exer1/Pic1.jpg"
+                  src="../Img/Exer2/Pic1.png"
                   alt="Image 1"
                   class="image-item"
                 />
                 <img
-                  src="../Img/Exer1/Pic2.jpg"
+                  src="../Img/Exer2/Pic2.png"
                   alt="Image 2"
                   class="image-item"
                 />
                 <img
-                  src="../Img/Exer1/Pic3.jpg"
+                  src="../Img/Exer2/Pic3.png"
                   alt="Image 3"
                   class="image-item"
                 />
                 <img
-                  src="../Img/Exer1/Pic4.png"
+                  src="../Img/Exer2/Pic4.png"
                   alt="Image 4"
                   class="image-item"
                 />
@@ -105,39 +115,327 @@
             </div>
 
             <div id="Step-to-step">
-              <span class="part-title">2.Step-to-step</span>
+              <h2 class="part-title">2. Step-to-step</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                The following steps outline the preprocessing pipeline for
+                determining chessboard size. Each step is designed to address
+                specific challenges in the images and ensure accurate detection
+                and measurement of the chessboard dimensions.
               </p>
+
+              <div id="step1">
+                <p class="part-part-title">Step 1: Gray-Scale</p>
+                <p class="part-content">
+                  Convert the input image to grayscale. This simplifies the
+                  image by removing color information, reducing the complexity
+                  of processing while preserving essential structural details.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/GrayScale.jpg"
+                  alt="Gray-Scale Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step2">
+                <p class="part-part-title">Step 2: Remove Sinusoidal Noise</p>
+                <p class="part-content">
+                  Upon observation, we notice sinusoidal noise in two of the
+                  four images. To address this, we first transform the images
+                  into the frequency domain using FFT and extract the magnitude
+                  spectrum of all four images. <br />
+                  The image with sinusoidal noise exhibits two bright points
+                  along the x-axis in the frequency domain. These points are
+                  carefully removed to eliminate the noise while preserving
+                  critical details in the image.
+                </p>
+
+                <p class="part-content">
+                  After applying a threshold to the spectrum image, we observe
+                  three bright points along the x-axis. The central point,
+                  however, is crucial and must be preserved. To achieve this, we
+                  create a mask to protect the central point, leaving only the
+                  two noise points. Using the original image, we subtract these
+                  two points to remove the sinusoidal noise.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/NoiseRemoval.jpg"
+                  alt="Noise Removal Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step3">
+                <p class="part-part-title">Step 3: Mean Filtering</p>
+                <p class="part-content">
+                  Mean filtering is a simple and effective image smoothing
+                  technique that helps reduce noise in an image. It works by
+                  replacing each pixel's value with the average value of its
+                  neighboring pixels within a specified kernel size. This
+                  operation effectively smoothens the image, making it easier to
+                  analyze or process further.
+                </p>
+                <p class="part-content">
+                  The mean filter is applied by sliding a square kernel, such as
+                  3x3 or 5x5, across the image and calculating the average of
+                  the pixel values within the kernel at each position. This new
+                  averaged value replaces the central pixel of the kernel,
+                  resulting in a smoother image with less high-frequency noise.
+                </p>
+                <p class="part-content">
+                  While mean filtering is effective at noise reduction, it can
+                  also blur edges and reduce image detail. As such, it is most
+                  useful in applications where preserving edges is less critical
+                  or in combination with other filtering techniques to achieve
+                  the desired result.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/GammaCorrection.jpg"
+                  alt="Gamma Correction Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step4">
+                <p class="part-part-title">Step 4: Edge Detection with Canny</p>
+                <p class="part-content">
+                  In this step, we use the Canny edge detection algorithm to
+                  identify the edges in the image. Canny is a popular method due
+                  to its ability to detect edges with precision while minimizing
+                  noise and false positives.
+                </p>
+                <p class="part-content">
+                  The Canny algorithm works in several stages: it applies
+                  Gaussian smoothing to reduce noise, computes gradients to
+                  highlight regions with high intensity changes, and uses
+                  non-maximum suppression to remove weak edges. Finally, double
+                  thresholding and edge tracking are performed to connect edge
+                  segments and retain only significant edges.
+                </p>
+                <div class="display-images">
+                  <img
+                    src="../Img/Exer2/edges_image_1.png"
+                    alt="Image 1"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/edges_image_2.png"
+                    alt="Image 2"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/edges_image_3.png"
+                    alt="Image 3"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/edges_image_4.png"
+                    alt="Image 4"
+                    class="image-item"
+                  />
+                </div>
+              </div>
+
+              <div id="step5">
+                <p class="part-part-title">Step 5: Opening, Closing</p>
+                <p class="part-content">
+                  Morphological operations such as opening and closing are
+                  applied in this step to refine the shapes of the detected
+                  objects. These techniques help remove noise, fill small gaps
+                  within objects, and connect fragmented edges into more unified
+                  lines.
+                </p>
+                <p class="part-content">
+                  The opening operation, which involves erosion followed by
+                  dilation, removes small noise points, while the closing
+                  operation, a dilation followed by erosion, bridges small gaps
+                  in the edges. Together, they enhance the clarity and
+                  continuity of the lines in the image.
+                </p>
+                <p class="part-content">
+                  By carefully calibrating the size of the structuring element
+                  used in these operations, the refined lines can be kept small
+                  enough to ensure accurate line-drawing without excessive
+                  overlaps or extensions. This step is essential for maintaining
+                  precision in subsequent processes.
+                </p>
+              </div>
+
+              <div id="step6">
+                <p class="part-part-title">
+                  Step 6: Line Detection with Hough Transform
+                </p>
+                <p class="part-content">
+                  In this step, the Hough Transform is used to detect straight
+                  lines in the image. This method works by transforming points
+                  in the image space into a parameter space defined by two
+                  values: <em>rho</em>, the distance from the origin to the
+                  line, and <em>theta</em>, the angle of the line. Each point in
+                  the image votes for potential lines, and lines with enough
+                  votes are identified as significant.
+                </p>
+                <p class="part-content">
+                  Tuning the parameters for the Hough Transform, including the
+                  resolution of <em>rho</em> and <em>theta</em>, as well as the
+                  minimum number of votes required to confirm a line, is
+                  crucial. Multiple tests may be necessary to find the best
+                  combination that accurately captures the desired lines while
+                  minimizing false detections.
+                </p>
+                <div class="display-images">
+                  <img
+                    src="../Img/Exer2/hough_lines_image_1.png"
+                    alt="Image 1"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/hough_lines_image_2.png"
+                    alt="Image 2"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/hough_lines_image_3.png"
+                    alt="Image 3"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/hough_lines_image_4.png"
+                    alt="Image 4"
+                    class="image-item"
+                  />
+                </div>
+              </div>
+              <div id="step7">
+                <p class="part-part-title">Step7: Remove redundant lines</p>
+                <p class="part-content">
+                  After detecting lines using the Hough Transform, redundant
+                  lines are removed to improve clarity and reduce overlap. Lines
+                  are considered redundant if their <em>rho</em> (distance from
+                  the origin) and <em>theta</em> (angle) values are too close to
+                  one another. These similar lines often represent the same
+                  structure in the image and can clutter the output.
+                </p>
+                <p class="part-content">
+                  To eliminate these duplicates, the lines are compared
+                  pairwise, and those with differences in <em>rho</em> or
+                  <em>theta</em> below a predefined threshold are merged or
+                  removed. This step ensures that only distinct and meaningful
+                  lines are retained, creating a cleaner and more accurate
+                  representation of the image’s structure.
+                </p>
+                <div class="display-images">
+                  <img
+                    src="../Img/Exer2/filtered_lines_image_1.png"
+                    alt="Image 1"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/filtered_lines_image_2.png"
+                    alt="Image 2"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/filtered_lines_image_3.png"
+                    alt="Image 3"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer2/filtered_lines_image_4.png"
+                    alt="Image 4"
+                    class="image-item"
+                  />
+                </div>
+              </div>
             </div>
+
             <div id="Evaluation">
-              <span class="part-title">3.Evaluation</span>
+              <h2 class="part-title">3. Evaluation</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                The evaluation results show that each image is expected to have
+                11 vertical lines and 7 horizontal lines. Adding 1 to these
+                counts should give the chessboard dimensions as 12 and 8.
+                However, the number of detected lines for each image is as
+                follows:
+              </p>
+              <ul>
+                <li>
+                  <strong>Image 1:</strong> Vertical lines (filtered): 13,
+                  Horizontal lines (filtered): 7
+                </li>
+                <li>
+                  <strong>Image 2:</strong> Vertical lines (filtered): 13,
+                  Horizontal lines (filtered): 7
+                </li>
+                <li>
+                  <strong>Image 3:</strong> Vertical lines (filtered): 14,
+                  Horizontal lines (filtered): 7
+                </li>
+                <li>
+                  <strong>Image 4:</strong> Vertical lines (filtered): 14,
+                  Horizontal lines (filtered): 7
+                </li>
+              </ul>
+              <p class="part-content">
+                The horizontal lines are detected correctly in all cases.
+                However, for the vertical lines, some issues are observed. The
+                Hough Transform sometimes identifies two lines on either side of
+                a main line, leading to extra detections. Additionally, some
+                vertical lines are missed. As a result, the final counts for
+                vertical lines are 13 or 14 instead of the expected 11.
               </p>
             </div>
             <div id="Conclusion">
-              <span class="part-title">4.Conclusion</span>
+              <h2 class="part-title">4. Conclusion</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                After experimenting with different parameter values, we obtained
+                the following settings for the main steps below. While the
+                results are acceptable, they are not yet perfect. In the future,
+                we plan to explore further improvements to accurately determine
+                the true size and structure of the chessboard.
               </p>
+              <ul>
+                <li>
+                  <p>
+                    cv2.resize(image, (461, 461), interpolation=cv2.INTER_AREA)
+                  </p>
+                </li>
+                <li><p>cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)</p></li>
+                <li><p>cv2.medianBlur(remove_stripes[i], 5)</p></li>
+                <li>
+                  <p>
+                    cv2.Canny(spp_removal_image[i], threshold1=50,
+                    threshold2=100)
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    cv2.dilate(edges_images[i], np.ones((5, 5), np.uint8),
+                    iterations=2)
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    cv2.erode(dilated, np.ones((3, 3), np.uint8), iterations=3)
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    cv2.HoughLines(edges, rho=0.75, theta=np.pi/180,
+                    threshold=150)
+                  </p>
+                </li>
+              </ul>
             </div>
             <div id="References">
-              <span class="part-title">5.References</span>
+              <h2 class="part-title">5. References</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                We sincerely thank Hanoi University and the Computer Vision Lab
+                for their valuable support in providing resources and materials
+                for this work. Their commitment to research and collaboration
+                has played an important role in shaping this project. The
+                resources and guidance from the Computer Vision Lab have greatly
+                enhanced our understanding and contributed to the success of
+                this work.
               </p>
             </div>
           </div>

@@ -45,7 +45,7 @@
           <div class="display-header">
             <h1 class="name-page">Preprocessing Image</h1>
           </div>
-          <p class="Name-exer">Exercise1: Counting number of rice grains.</p>
+          <h1 class="Name-exer">Exercise1: Counting number of rice grains.</h1>
           <span class="post-date" style="color: gray; font-style: italic">
             December 25, 2024
           </span>
@@ -57,11 +57,12 @@
               <li><a href="#Introduction">Introduction</a></li>
               <li><a href="#Step-to-step">Step-to-step</a></li>
               <ul>
-                <li><a href="#step1">Step1</a></li>
-                <li><a href="#step2">Step2</a></li>
-                <li><a href="#step3">Step3</a></li>
-                <li><a href="#step4">Step4</a></li>
-                <li><a href="#step5">Step5</a></li>
+                <li><a href="#step1">Gray-Scale</a></li>
+                <li><a href="#step2">Remove Sinusoidal Noise</a></li>
+                <li><a href="#step3">Gamma Correction</a></li>
+                <li><a href="#step4">Binary Image Conversion</a></li>
+                <li><a href="#step5">Opening, Closing</a></li>
+                <li><a href="#step6">Counting Object</a></li>
               </ul>
               <li><a href="#Evaluation">Evaluation</a></li>
               <li><a href="#Conclusion">Conclusion</a></li>
@@ -71,7 +72,7 @@
 
           <div class="main-content">
             <div id="Introduction">
-              <span class="part-title">1.Introduction</span>
+              <h2 class="part-title">1. Introduction</h2>
               <p class="part-content">
                 Given a set of images in which several subjects are captured
                 against a relatively uniform, possibly noisy background, count
@@ -105,39 +106,249 @@
             </div>
 
             <div id="Step-to-step">
-              <span class="part-title">2.Step-to-step</span>
+              <h2 class="part-title">2. Step-to-step</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                The following steps outline the preprocessing pipeline for
+                counting rice grains. Each step is designed to handle specific
+                challenges in the images and ensure accurate object detection
+                and counting.
               </p>
+
+              <div id="step1">
+                <p class="part-part-title">Step 1: Gray-Scale</p>
+                <p class="part-content">
+                  Convert the input image to grayscale. This simplifies the
+                  image by removing color information, reducing the complexity
+                  of processing while preserving essential structural details.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/GrayScale.jpg"
+                  alt="Gray-Scale Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step2">
+                <p class="part-part-title">Step 2: Remove Sinusoidal Noise</p>
+                <p class="part-content">
+                  Upon observation, we notice sinusoidal noise in one of the
+                  four images. To address this, we first transform the images
+                  into the frequency domain using FFT and extract the magnitude
+                  spectrum of all four images. <br />
+                  The image with sinusoidal noise exhibits two bright points
+                  along the x-axis in the frequency domain. These points are
+                  carefully removed to eliminate the noise while preserving
+                  critical details in the image.
+                </p>
+
+                <p class="part-content">
+                  After applying a threshold to the spectrum image, we observe
+                  three bright points along the x-axis. The central point,
+                  however, is crucial and must be preserved. To achieve this, we
+                  create a mask to protect the central point, leaving only the
+                  two noise points. Using the original image, we subtract these
+                  two points to remove the sinusoidal noise.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/NoiseRemoval.jpg"
+                  alt="Noise Removal Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step3">
+                <p class="part-part-title">Step 3: Gamma Correction</p>
+                <p class="part-content">
+                  Perform gamma correction to adjust the brightness levels of
+                  the image. This step enhances details in darker or brighter
+                  regions, ensuring uniform visibility. The last image shows
+                  variations in brightness. To address this, we apply gamma
+                  correction to all images, ensuring consistent and visually
+                  enhanced results.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/GammaCorrection.jpg"
+                  alt="Gamma Correction Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step4">
+                <p class="part-part-title">Step 4: Binary Image Conversion</p>
+                <p class="part-content">
+                  Convert the grayscale image to a binary image using a
+                  thresholding method. This step separates the objects of
+                  interest (rice grains) from the background. Converting the
+                  image to a binary format is a crucial step in object counting,
+                  as it simplifies the process. To achieve this, we combine
+                  Gaussian blur with Adaptive thresholding. This approach
+                  enhances the contrast and separates the objects from the
+                  background, making it easier to count the rice grains
+                  accurately
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/BinaryImage.jpg"
+                  alt="Binary Image Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step5">
+                <p class="part-part-title">Step 5: Opening, Closing</p>
+                <p class="part-content">
+                  Use morphological operations like opening and closing to
+                  refine the shapes of the objects. This step removes noise and
+                  fills small gaps within objects. We need to change the related
+                  parameters in a elaborate way and combine dilate and erode
+                  efficiently, avoiding rice grains be connected to each other
+                  and losing grains are crucial.
+                </p>
+                <!-- <img
+                  src="../Img/Exer1/MorphologicalOps.jpg"
+                  alt="Morphological Operations Example"
+                  class="image-item"
+                /> -->
+              </div>
+
+              <div id="step6">
+                <p class="part-part-title">Step 6: Counting Object</p>
+                <p class="part-content">
+                  After several tries, although we change parameter multiple
+                  times, we still get some connected grains. To reduce bad
+                  result in counting step, we try to utilize distance transform
+                  technique and get sure foreground of 4 images:
+                </p>
+
+                <div class="display-images">
+                  <img
+                    src="../Img/Exer1/PicDone1.png"
+                    alt="Image 1"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer1/PicDone2.png"
+                    alt="Image 2"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer1/PicDone3.png"
+                    alt="Image 3"
+                    class="image-item"
+                  />
+                  <img
+                    src="../Img/Exer1/PicDone4.png"
+                    alt="Image 4"
+                    class="image-item"
+                  />
+                </div>
+                <p>
+                  Using Connected Component Label technique, We get the result
+                </p>
+                <ul>
+                  <li>Num rice grain of image 1: 102</li>
+                  <li>Num rice grain of image 2: 100</li>
+                  <li>Num rice grain of image 3: 100</li>
+                  <li>Num rice grain of image 4: 97</li>
+                </ul>
+                <p>
+                  Some rice grains are lost, some are splited due to previous
+                  steps, lead to small inaccuracy in the final result (each
+                  should have 100 grains).
+                </p>
+              </div>
             </div>
+
             <div id="Evaluation">
-              <span class="part-title">3.Evaluation</span>
+              <h2 class="part-title">3. Evaluation</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                In the gamma filtering step, it is essential to carefully adjust
+                the parameters to ensure that the white rice grains are not
+                affected by variations in lighting conditions. Multiple trials
+                with different parameter values are necessary to evaluate and
+                identify the optimal settings.
+              </p>
+              <p class="part-content">
+                For the mean filtering step, selecting an appropriate kernel
+                size (block size) is crucial. The kernel should be large enough
+                to remove salt-and-pepper noise without compromising the image
+                details.
+              </p>
+              <p class="part-content">
+                The binary conversion step is particularly critical. Due to the
+                complex lighting conditions in the images, conventional
+                thresholding methods are insufficient. Instead, we employ
+                adaptive thresholding, which dynamically adjusts to lighting
+                variations. However, achieving optimal results requires
+                extensive experimentation with key parameters specifically,
+                block_size and C. The block_size must be large enough to
+                correspond to the size of the rice grains.
+              </p>
+              <p class="part-content">
+                In the opening and closing steps, the parameters must be
+                carefully tuned to ensure that rice grains do not merge or break
+                apart. Afterward, for instances where a few grains remain stuck
+                together, we use the distance transform algorithm. Special
+                attention must be given to the distance transform and the
+                definitions of sure background and sure foreground to
+                successfully separate overlapping grains.
               </p>
             </div>
             <div id="Conclusion">
-              <span class="part-title">4.Conclusion</span>
+              <h2 class="part-title">4. Conclusion</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                After experimenting with various value of parameters, we get
+                those for main steps belows. The result is not the best, in the
+                future, we will continue to find the ways to maintain the real
+                shape and real number of rice grains
               </p>
+              <ul>
+                <li><p>cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</p></li>
+                <li>
+                  <p>
+                    ((image - x_min) / (x_max - x_min) * 255).astype(np.uint8)
+                  </p>
+                </li>
+
+                <li><p>cv2.LUT(remove_stripes[i], table)</p></li>
+                <li>
+                  <p>cv2.medianBlur(gamma_filter_images[i],5)</p>
+                </li>
+                <li>
+                  <p>
+                    cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.
+                    THRESH_BINARY,blockSize=61,C=-5)
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    kernel = np.ones((3, 3), np.uint8), iterations=3 for
+                    Open,close
+                  </p>
+                </li>
+                <li><p>cv2.distanceTransform(img,cv2.DIST_L2,5)</p></li>
+                <li>
+                  <p>
+                    cv2.threshold(dist_transform,0.25*dist_transform.max(),255,0)
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    cv2.connectedComponentsWithStats(sure_fg_here,
+                    connectivity=8)
+                  </p>
+                </li>
+              </ul>
             </div>
             <div id="References">
-              <span class="part-title">5.References</span>
+              <h2 class="part-title">5. References</h2>
               <p class="part-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
-                maxime assumenda animi, non impedit minus velit voluptatibus,
-                quam sit aliquid cum magnam quos culpa. Non voluptatum
-                distinctio blanditiis fugiat maxime.
+                We sincerely thank Hanoi University and the Computer Vision Lab
+                for their valuable support in providing resources and materials
+                for this work. Their commitment to research and collaboration
+                has played an important role in shaping this project. The
+                resources and guidance from the Computer Vision Lab have greatly
+                enhanced our understanding and contributed to the success of
+                this work.
               </p>
             </div>
           </div>
